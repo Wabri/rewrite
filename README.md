@@ -7,7 +7,7 @@ Rewrite of the YAPI system is to include cross  platform support and remote inst
 
 | LICENSE | Packages |
 |---------|----------|
-| [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)| [![Rewrite: Project](https://img.shields.io/badge/Rewrite-Packages-green.svg)](https://github.com/YetAnotherPackageInstaller/rewrite) |
+| [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)| [![Rewrite: Project](https://img.shields.io/badge/Rewrite-Packages-green.svg)](https://github.com/YetAnotherPackageInstaller/packages) |
 
 ****
 
