@@ -5,9 +5,10 @@ Rewrite of the YAPI system is to include cross  platform support and remote inst
 
 ## Badges
 
-| LICENSE | Packages |
-|---------|----------|
-| [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)| [![Rewrite: Project](https://img.shields.io/badge/Rewrite-Packages-green.svg)](https://github.com/YetAnotherPackageInstaller/packages) |
+| LICENSE | Debian Packages | Ubuntu Packages | MacOS Packages |
+|---------|-----------------|-----------------|----------------|
+|[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)|[![Rewrite: Project](https://img.shields.io/badge/Rewrite-Debian-green.svg)](https://github.com/YetAnotherPackageInstaller/packages-linux-debian)|[![Rewrite: Project](https://img.shields.io/badge/Rewrite-Ubuntu-green.svg)](https://github.com/YetAnotherPackageInstaller/packages-linux-ubuntu)|[![Rewrite: Project](https://img.shields.io/badge/Rewrite-MacOS-green.svg)](https://github.com/YetAnotherPackageInstaller/packages-darwin)|
+
 
 ****
 
