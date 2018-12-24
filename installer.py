@@ -1,10 +1,10 @@
-def getFile(operating, package, location, remote_url, file_extension, cache_location):
+def getFile(file_url, cache_location, local_name):
     import wget
     import os
-    file_url = remote_url + '/' + operating + '/' + package + file_extension
     os.chdir(cache_location)
-    if os.path.isfile(package + file_extension) == False:
-        wget.download(file_url, package + file_extension)
+    if os.path.isfile(local_name) == False:
+        print(file_url)
+        wget.download(file_url, local_name)
         print() #Newline after wget
 
 def runScript(directory, file, cache):
