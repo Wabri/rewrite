@@ -1,4 +1,4 @@
-def getFile(file_url, cache_location, local_name):
+def get_file(file_url, cache_location, local_name):
     import wget
     import os
     os.chdir(cache_location)
@@ -7,7 +7,7 @@ def getFile(file_url, cache_location, local_name):
         wget.download(file_url, local_name)
         print() #Newline after wget
 
-def runScript(directory, file, cache):
+def run_script(directory, file, cache):
     import subprocess
     import os
     try:
@@ -27,3 +27,10 @@ def runScript(directory, file, cache):
         print('Issue Installing')
         if cache != True:
             os.remove(file)
+
+def fix_path(path, operatings):
+    if operatings == "windows":
+        path.replace("/", "\\")
+    else:
+        path.replace("\\", "/")
+    return path
