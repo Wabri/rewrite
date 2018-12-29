@@ -7,7 +7,7 @@ Rewrite of the YAPI system is to include cross  platform support and remote inst
 
 | Travis Status | LICENSE | Debian Packages | MacOS Packages |
 |---------------|---------|-----------------|----------------|
-|[![Build Status](https://travis-ci.com/YetAnotherPackageInstaller/rewrite.svg?branch=master)]|[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)|[![Rewrite: Project](https://img.shields.io/badge/Rewrite-Debian-green.svg)](https://github.com/YetAnotherPackageInstaller/packages-linux-debian)|[![Rewrite: Project](https://img.shields.io/badge/Rewrite-MacOS-green.svg)](https://github.com/YetAnotherPackageInstaller/packages-darwin)|
+|[![Build Status](https://travis-ci.com/YetAnotherPackageInstaller/rewrite.svg?branch=master)](https://travis-ci.com/YetAnotherPackageInstaller/rewrite)|[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)|[![Rewrite: Project](https://img.shields.io/badge/Rewrite-Debian-green.svg)](https://github.com/YetAnotherPackageInstaller/packages-linux-debian)|[![Rewrite: Project](https://img.shields.io/badge/Rewrite-MacOS-green.svg)](https://github.com/YetAnotherPackageInstaller/packages-darwin)|
 
 
 ****
