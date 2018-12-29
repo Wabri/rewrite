@@ -12,3 +12,5 @@ matrix:
     - python: 3.3
       dist: trusty
 script: python yapi.py install test
+notifications:
+    slack: yapiworkspace:4PGIakYd0aiB2LlBP78qbmCW
