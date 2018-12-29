@@ -1,20 +1,24 @@
 def full_install(package):
     import configparser
+    import os
+    import sys
+    import installer
+
     config = configparser.ConfigParser()
     config.read('config.ini')
-    platform = config['SYSTEM']['platform']
+    platform = config['OS']['platform']
     cache_boolean =("True" == config['CACHE']['keep_cache'])
     cache_location = config['CACHE']['cache_location']
     remote_url = config['REMOTE']['location']
     remote_branch = config['REMOTE']['location_branch']
     file_extension = config['REMOTE']['file_extension']
+
     full_file = package + file_extension
-    file = package
     file_url = fix_path(
         remote_url + 'packages-' + platform + '/'
         + remote_branch + '/scripts/' + full_file, platform)
     get_file(file_url, cache_location, full_file)
-    return(run_script(cache_location, full_file, cache_boolean))
+    return run_script(cache_location, full_file, cache_boolean, platform)
 
 def get_file(file_url, cache_location, local_name):
     import wget
@@ -25,13 +29,9 @@ def get_file(file_url, cache_location, local_name):
         wget.download(file_url, local_name)
         print() #Newline after wget
 
-def run_script(directory, file, cache):
+def run_script(directory, file, cache, platform):
     import subprocess
     import os
-    import configparser
-    config = configparser.ConfigParser()
-    config.read('config.ini')
-    platform = config['SYSTEM']['platform']
     try:
         directory = fix_path(os.path.dirname(__file__) + '/'  + directory, platform)
         os.chdir(directory)

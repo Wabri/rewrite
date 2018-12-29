@@ -8,16 +8,7 @@ except ImportError:
 def build(app):
     def installHandle(widget):
         import installer
-        installer.full_install(package)
-        # full_file = packageInput.value + yapi.file_extension
-        # file = packageInput.value
-        # file_url = installer.fix_path(yapi.remote_url + 'packages-' +
-        #     yapi.platform + '/' + yapi.remote_branch + '/scripts/' +
-        #     full_file, yapi.platform)
-        # installer.get_file(file_url, yapi.cache_location, full_file)
-        # resultInput.value = installer.run_script(yapi.cache_location,
-        #     full_file, yapi.cache_boolean)
-
+        resultInput.value = installer.full_install(packageInput.value)
     box = toga.Box()
     packageBox = toga.Box()
     packageLabel = toga.Label('Package To Install:')
@@ -31,13 +22,11 @@ def build(app):
     packageBox.add(packageInput)
     submitBox.add(install)
     resultBox.add(resultInput)
-    box.add(listBox)
     box.add(packageBox)
     box.add(submitBox)
     box.add(resultBox)
 
     box.style.update(direction=COLUMN, padding_top=10)
-    listBox.style.update(direction=ROW, padding=5)
     packageBox.style.update(direction=ROW, padding=5)
     submitBox.style.update(direction=ROW, padding=5)
     return box
