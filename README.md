@@ -5,9 +5,9 @@ Rewrite of the YAPI system is to include cross  platform support and remote inst
 
 ## Badges
 
-| LICENSE | Debian Packages | Ubuntu Packages | MacOS Packages |
-|---------|-----------------|-----------------|----------------|
-|[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)|[![Rewrite: Project](https://img.shields.io/badge/Rewrite-Debian-green.svg)](https://github.com/YetAnotherPackageInstaller/packages-linux-debian)|[![Rewrite: Project](https://img.shields.io/badge/Rewrite-Ubuntu-green.svg)](https://github.com/YetAnotherPackageInstaller/packages-linux-ubuntu)|[![Rewrite: Project](https://img.shields.io/badge/Rewrite-MacOS-green.svg)](https://github.com/YetAnotherPackageInstaller/packages-darwin)|
+| LICENSE | Debian Packages | MacOS Packages |
+|---------|-----------------|----------------|
+|[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)|[![Rewrite: Project](https://img.shields.io/badge/Rewrite-Debian-green.svg)](https://github.com/YetAnotherPackageInstaller/packages-linux-debian)|[![Rewrite: Project](https://img.shields.io/badge/Rewrite-MacOS-green.svg)](https://github.com/YetAnotherPackageInstaller/packages-darwin)|
 
 
 ****
@@ -20,8 +20,7 @@ New Scripts are being worked on in the packages repository. Please click on the 
 
 ## How To Contribute
 
-Contributions are always welcome, either reporting issues/bugs or forking the repository and then issuing pull requests when you have completed some additional coding that you feel will be beneficial to the main project. If you are interested in contributing in a more dedicated capacity, then please contact us.
-
+Contributions are always welcome, either reporting issues/bugs or forking the repository and then issuing pull requests when you have completed some additional coding that you feel will be beneficial to the main project. Contributions are welcome to the wiki and additional packages. Please see the wiki entry for more information. If you are interested in contributing in a more dedicated capacity, then please contact us.
 ****
 
 ## License
