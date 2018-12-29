@@ -14,7 +14,7 @@ Rewrite of the YAPI system is to include cross  platform support and remote inst
 
 ## How to add new script
 
-New Scripts are being worked on in the packages repository. Please click on the Packages badge above.
+New Scripts are being worked on in the packages repository. Please click on the Packages badge above. More information is in the wiki of this repository as well.
 
 ****
 

@@ -1,3 +1,21 @@
+def full_install(package):
+    import configparser
+    config = configparser.ConfigParser()
+    config.read('config.ini')
+    platform = config['SYSTEM']['platform']
+    cache_boolean =("True" == config['CACHE']['keep_cache'])
+    cache_location = config['CACHE']['cache_location']
+    remote_url = config['REMOTE']['location']
+    remote_branch = config['REMOTE']['location_branch']
+    file_extension = config['REMOTE']['file_extension']
+    full_file = package + file_extension
+    file = package
+    file_url = fix_path(
+        remote_url + 'packages-' + platform + '/'
+        + remote_branch + '/scripts/' + full_file, platform)
+    get_file(file_url, cache_location, full_file)
+    return(run_script(cache_location, full_file, cache_boolean))
+
 def get_file(file_url, cache_location, local_name):
     import wget
     import os
@@ -10,8 +28,12 @@ def get_file(file_url, cache_location, local_name):
 def run_script(directory, file, cache):
     import subprocess
     import os
+    import configparser
+    config = configparser.ConfigParser()
+    config.read('config.ini')
+    platform = config['SYSTEM']['platform']
     try:
-        directory = os.path.dirname(__file__) + '/'  + directory
+        directory = fix_path(os.path.dirname(__file__) + '/'  + directory, platform)
         os.chdir(directory)
         with open(file, 'r') as file_script:
             bashCommand = ''
@@ -19,17 +41,18 @@ def run_script(directory, file, cache):
                 if line[0] != '#':
                     bashCommand += line
             bashCommand = bashCommand.replace('\n', '; ')
-            subprocess.call(
+            output =subprocess.call(
                 bashCommand, stderr=subprocess.STDOUT, shell=True)
             if cache != True:
                 os.remove(file)
+            return output
     except (OSError, IOError, KeyError):
-        print('Issue Installing')
+        return 'Issue Installing'
         if cache != True:
             os.remove(file)
 
-def fix_path(path, operatings):
-    if operatings == "windows":
+def fix_path(path, platform):
+    if platform == "windows":
         path.replace("/", "\\")
     else:
         path.replace("\\", "/")
