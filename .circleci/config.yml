@@ -23,9 +23,6 @@ jobs:
             python -m venv venv || virtualenv venv
             . venv/bin/activate
             pip install -r requirements.txt
-      - save_cache:
-          paths:
-            - ./venv
       - run:
           name: Run tests
           command: |
