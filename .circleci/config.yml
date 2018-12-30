@@ -23,6 +23,8 @@ jobs:
           command: |
             python -m venv venv || virtualenv venv
             . venv/bin/activate
+            sudo pip install --upgrade pip
+            sudo pip install -r requirements.txt
       - run:
           name: Run tests
           command: |
