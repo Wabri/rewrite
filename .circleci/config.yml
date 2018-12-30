@@ -16,13 +16,12 @@ jobs:
       - run:
           name: Install YAPI
           command: |
-            wget https://raw.githubusercontent.com/YetAnotherPackageInstaller/YAPI/install.sh -O - | sudo bash -
+            git clone https://raw.githubusercontent.com/YetAnotherPackageInstaller/rewrite.git
       - run:
           name: Install dependencies
           command: |
             python -m venv venv || virtualenv venv
             . venv/bin/activate
-            pip install -r requirements.txt
       - run:
           name: Run tests
           command: |
