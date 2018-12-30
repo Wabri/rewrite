@@ -1,0 +1,41 @@
+version: 2
+workflows:
+  version: 2
+  test:
+    jobs:
+      - test-3.6
+      - test-3.5
+      - test-2.7
+jobs:
+  test-3.7: &test-template
+    docker:
+      - image: circleci/python:3.7-jessie
+    working_directory: ~/repo
+    steps:
+      - checkout
+      - run:
+          name: Install YAPI
+          command: |
+            wget https://raw.githubusercontent.com/YetAnotherPackageInstaller/YAPI/install.sh -O - | sudo bash -
+      - run:
+          name: Install dependencies
+          command: |
+            python -m venv venv || virtualenv venv
+            . venv/bin/activate
+            pip install -r requirements.txt
+      - save_cache:
+          paths:
+            - ./venv
+      - run:
+          name: Run tests
+          command: |
+            . venv/bin/activate
+            python yapi.py install test
+  test-3.6:
+    <<: *test-template
+    docker:
+      - image: circleci/python:3.6-jessie
+  test-3.3:
+    <<: *test-template
+    docker:
+      - image: circleci/python:3.3-jessie
