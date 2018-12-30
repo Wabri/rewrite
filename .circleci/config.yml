@@ -9,13 +9,14 @@ workflows:
 jobs:
   test-3.7: &test-template
     docker:
-      - image: circleci/python:3.7-jessie
+      - image: circleci/python:3.7-rc-node
     working_directory: ~/repo
     steps:
       - checkout
       - run:
           name: Install YAPI
           command: |
+            pip install -r requirements.txt
             echo "Ready to  test!"
       - run:
           name: Install dependencies
