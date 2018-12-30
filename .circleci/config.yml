@@ -16,7 +16,7 @@ jobs:
       - run:
           name: Install YAPI
           command: |
-            pip install -r requirements.txt
+            sudo pip install -r requirements.txt
             echo "Ready to  test!"
       - run:
           name: Install dependencies
