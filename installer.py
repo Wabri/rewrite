@@ -21,11 +21,11 @@ def full_install(package):
     return run_script(cache_location, full_file, cache_boolean, platform)
 
 def get_file(file_url, cache_location, local_name):
-    import urllib
+    from urllib import request
     import shutil
     import os
     os.chdir(cache_location)
-    with urllib.request.urlopen(file_url) as response, open(local_name, 'wb') as out_file:
+    with request.urlopen(file_url) as response, open(local_name, 'wb') as out_file:
         shutil.copyfileobj(response, out_file)
 
 def run_script(directory, file, cache, platform):
