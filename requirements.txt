@@ -1,2 +1,2 @@
-shutil
+pytest-shutil
 urllib
