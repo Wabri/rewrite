@@ -21,7 +21,7 @@ def full_install(package):
     return run_script(cache_location, full_file, cache_boolean, platform)
 
 def get_file(file_url, cache_location, local_name):
-    import urllib.request
+    import urllib
     import shutil
     import os
     os.chdir(cache_location)
