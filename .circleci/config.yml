@@ -10,7 +10,7 @@ jobs:
   test-3.7: &test-template
     docker:
       - image: circleci/python:3.7-rc-node
-    working_directory: ~/repo
+    working_directory: ~/yapi
     steps:
       - checkout
       - run:
