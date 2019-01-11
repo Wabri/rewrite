@@ -24,6 +24,12 @@ def config_update():
         }
         system += switch.get(distro.id(), 'error')
 
+    search_base = config['Remote']['search_base']
+    search_end = config['Remote']['search_end']
+    branch = config['Remote']['location_branch']
+    full_search_url = search_base + 'packages-' + system + search_end + branch
+
+    config.set('Search', 'packages_search_remote', full_search_url)
     config.set('OS', 'platform', system)
     cfgfile = open("config.ini",'w')
     config.write(cfgfile)
