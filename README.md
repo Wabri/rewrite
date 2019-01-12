@@ -12,6 +12,12 @@ Rewrite of the YAPI system is to include cross  platform support and remote inst
 
 ****
 
+## Installation
+
+To install the yapi rewrite run:
+
+  wget https://raw.githubusercontent.com/YetAnotherPackageInstaller/rewrite/master/install.sh -O - | sudo bash -
+
 ## How to add new script
 
 New Scripts are being worked on in the packages repository. Please click on the Packages badge above. More information is in the wiki of this repository as well.
