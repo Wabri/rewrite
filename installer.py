@@ -7,11 +7,11 @@ def full_install(package):
     config = configparser.ConfigParser()
     config.read('config.ini')
     platform = config['OS']['platform']
-    cache_boolean =("True" == config['CACHE']['keep_cache'])
-    cache_location = config['CACHE']['cache_location']
-    remote_url = config['REMOTE']['location']
-    remote_branch = config['REMOTE']['location_branch']
-    file_extension = config['REMOTE']['file_extension']
+    cache_boolean =("True" == config['Cache']['keep_cache'])
+    cache_location = config['Cache']['cache_location']
+    remote_url = config['Remote']['location']
+    remote_branch = config['Remote']['location_branch']
+    file_extension = config['Remote']['file_extension']
 
     full_file = package + file_extension
     file_url = fix_path(
