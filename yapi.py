@@ -9,18 +9,22 @@ import interface
 import configuration
 import search
 
-if (len(sys.argv) != 2) & (sys.argv[1] != 'config'):
-    #Config Reading
-    config = configparser.ConfigParser()
-    config.read('config.ini')
-    platform = config['OS']['platform']
-    cache_boolean = ("True" == config['Cache']['keep_cache'])
-    cache_location = config['Cache']['cache_location']
-    remote_url = config['Remote']['location']
-    remote_branch = config['Remote']['location_branch']
-    file_extension = config['Remote']['file_extension']
-    search_local = ("True" == config['Search']['search_local'])
-    remote_search_dir = config['Search']['packages_search_remote']
+if len(sys.argv) != 2:
+    if (sys.argv[1] == 'config'):
+        try:
+            #Config Reading
+            config = configparser.ConfigParser()
+            config.read('config.ini')
+            platform = config['OS']['platform']
+            cache_boolean = ("True" == config['Cache']['keep_cache'])
+            cache_location = config['Cache']['cache_location']
+            remote_url = config['Remote']['location']
+            remote_branch = config['Remote']['location_branch']
+            file_extension = config['Remote']['file_extension']
+            search_local = ("True" == config['Search']['search_local'])
+            remote_search_dir = config['Search']['packages_search_remote']
+        except:
+            pass
 
 #Main Program
 if len(sys.argv) == 1:
