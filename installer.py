@@ -5,7 +5,6 @@ def full_install(package):
     import installer
     import modules.config_import as config_import
 
-    remote_branch = config['Remote']['location_branch']
     config = json.loads(config_import.get_config())
     os_platform = config['OS.platform']
     cache_boolean = ('True' == config['Cache.keep_cache'])
