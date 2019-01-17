@@ -2,6 +2,7 @@ def config_update():
     import configparser
     import platform
     import os
+    os.chdir('config')
     if os.path.isfile('config.ini') == False:
         import shutil
         shutil.copy('default.ini', 'config.ini')

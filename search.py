@@ -1,4 +1,4 @@
-def search(pattern, url, extension, local_boolean, local_dir):
+def search(pattern, extension, local_boolean, local_dir):
     from urllib import request
     import configparser
     import shutil

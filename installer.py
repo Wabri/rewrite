@@ -4,6 +4,7 @@ def full_install(package):
     import sys
     import installer
 
+    os.chdir('config')
     config = configparser.ConfigParser()
     config.read('config.ini')
     platform = config['OS']['platform']
@@ -12,6 +13,7 @@ def full_install(package):
     remote_url = config['Remote']['location']
     remote_branch = config['Remote']['location_branch']
     file_extension = config['Remote']['file_extension']
+    os.chdir('..')
 
     full_file = package + file_extension
     file_url = fix_path(
@@ -20,20 +22,17 @@ def full_install(package):
     get_file(file_url, cache_location, full_file)
     return run_script(cache_location, full_file, cache_boolean, platform)
 
-def get_file(file_url, cache_location, local_name):
+def get_file(file_url, local_name):
     from urllib import request
     import shutil
     import os
-    os.chdir(cache_location)
     with request.urlopen(file_url) as response, open(local_name, 'wb') as out_file:
         shutil.copyfileobj(response, out_file)
 
-def run_script(directory, file, cache, platform):
+def run_script(file, cache):
     import subprocess
     import os
     try:
-        directory = fix_path(os.path.dirname(__file__) + '/'  + directory, platform)
-        os.chdir(directory)
         with open(file, 'r') as file_script:
             bashCommand = ''
             for line in file_script.readlines():
