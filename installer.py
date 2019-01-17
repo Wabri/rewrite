@@ -1,26 +1,25 @@
 def full_install(package):
-    import configparser
     import os
     import sys
+    import json
     import installer
+    import modules.config_import as config_import
 
-    os.chdir('config')
-    config = configparser.ConfigParser()
-    config.read('config.ini')
-    platform = config['OS']['platform']
-    cache_boolean =("True" == config['Cache']['keep_cache'])
-    cache_location = config['Cache']['cache_location']
-    remote_url = config['Remote']['location']
     remote_branch = config['Remote']['location_branch']
-    file_extension = config['Remote']['file_extension']
-    os.chdir('..')
+    config = json.loads(config_import.get_config())
+    os_platform = config['OS.platform']
+    cache_boolean = ('True' == config['Cache.keep_cache'])
+    cache_location = config['Cache.cache_location']
+    search_local = ('True' == config['Search.search_local'])
+    search_url = config['Search.search_url']
+    remote_location = config['Remote.location']
+    remote_branch = config['Remote.branch']
+    file_extension = config['Remote.file_extension']
 
-    full_file = package + file_extension
-    file_url = fix_path(
-        remote_url + 'packages-' + platform + '/'
-        + remote_branch + '/scripts/' + full_file, platform)
-    get_file(file_url, cache_location, full_file)
-    return run_script(cache_location, full_file, cache_boolean, platform)
+    file_name = package + file_extension
+    file_url = remote_location + os_platform + '/' + remote_branch + '/scripts/' + file_name
+    get_file(file_url, file_name)
+    return run_script(file_name, cache_boolean)
 
 def get_file(file_url, local_name):
     from urllib import request
