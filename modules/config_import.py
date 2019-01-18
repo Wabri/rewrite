@@ -1,16 +1,17 @@
 def get_config():
     #Imports
     import os
-    import configparser
+    from configparser import ConfigParser
+    from configparser import ExtendedInterpolation
     import json
 
     #Get Config
     conf = {}
     os.chdir('config')
-    config = configparser.ConfigParser()
+    config = ConfigParser(interpolation=ExtendedInterpolation())
     config.read('config.ini')
     conf['OS.platform']           = config['OS']['platform']
-    conf['Cache.keep_cache']      = ("True" == config['Cache']['keep_cache'])
+    conf['Cache.keep_cache']      = config['Cache']['keep_cache']
     conf['Cache.cache_location']  = config['Cache']['cache_location']
     conf['Search.search_local']   = ("True" == config['Search']['search_local'])
     conf['Search.search_url']     = config['Search']['search_url']
@@ -25,14 +26,16 @@ def update_config():
     import os
     import json
     import platform
-    import configparser
+    from configparser import ConfigParser
+    from configparser import ExtendedInterpolation
 
     os.chdir('config')
+    #Make config if not present
     if os.path.isfile('config.ini') == False:
         import shutil
         shutil.copy('default.ini', 'config.ini')
 
-    config = configparser.ConfigParser()
+    config = ConfigParser(interpolation=ExtendedInterpolation())
     config.read('config.ini')
 
     if platform.system() == 'Linux':
@@ -50,12 +53,6 @@ def update_config():
         }
         system += switch.get(distro.id(), 'error')
 
-    search_base = config['Remote']['search_base']
-    search_end = config['Remote']['search_end']
-    branch = config['Remote']['location_branch']
-    full_search_url = search_base + 'packages-' + system + search_end + branch
-
-    config.set('Search', 'packages_search_remote', full_search_url)
     config.set('OS', 'platform', system)
     cfgfile = open("config.ini",'w')
     config.write(cfgfile)

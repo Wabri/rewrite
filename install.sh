@@ -2,12 +2,16 @@ cd ~
 git clone https://github.com/YetAnotherPackageInstaller/rewrite.git YAPI --depth 1
 git clone https://github.com/pybee/toga.git
 cd toga
-pip install -e src/core
-pip install -e src/dummy
-pip install -e src/gtk
+pip3 install -e src/core
+pip3 install -e src/dummy
+if [[ "$OSTYPE" == "linux-gnu" ]]; then
+  pip3 install -e src/gtk
+elif [[ "$OSTYPE" == "darwin"* ]]; then
+  pip3 install -e src/cocoa
+fi
 cd ..
-sudo rm -r toga
 cd YAPI
-sudo rm -r .git* .travis.yml install.sh .circleci
+pip3 install requirements.txt
+sudo rm -r .git* .travis.yml .circleci install.sh LICENSE README.md
 python3 yapi.py config
 cd ..

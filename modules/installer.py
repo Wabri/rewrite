@@ -1,55 +1,45 @@
 def full_install(package):
     import os
-    import sys
     import json
-    import installer
     import modules.config_import as config_import
 
     config = json.loads(config_import.get_config())
     os_platform = config['OS.platform']
-    cache_boolean = ('True' == config['Cache.keep_cache'])
+    cache_boolean = config['Cache.keep_cache']
     cache_location = config['Cache.cache_location']
-    search_local = ('True' == config['Search.search_local'])
-    search_url = config['Search.search_url']
     remote_location = config['Remote.location']
     remote_branch = config['Remote.branch']
     file_extension = config['Remote.file_extension']
 
     file_name = package + file_extension
     file_url = remote_location + os_platform + '/' + remote_branch + '/scripts/' + file_name
+    os.chdir(cache_location)
     get_file(file_url, file_name)
     return run_script(file_name, cache_boolean)
 
-def get_file(file_url, local_name):
+def get_file(file_url, file_name):
     from urllib import request
     import shutil
-    import os
-    with request.urlopen(file_url) as response, open(local_name, 'wb') as out_file:
-        shutil.copyfileobj(response, out_file)
+    with request.urlopen(file_url) as response, open(
+        file_name, 'wb') as out_file:
+            shutil.copyfileobj(response, out_file)
 
-def run_script(file, cache):
+def run_script(file_name, cache_keep):
     import subprocess
     import os
     try:
-        with open(file, 'r') as file_script:
+        with open(file_name, 'r') as file_script:
             bashCommand = ''
             for line in file_script.readlines():
                 if line[0] != '#':
                     bashCommand += line
             bashCommand = bashCommand.replace('\n', '; ')
-            output =subprocess.call(
+            output = subprocess.call(
                 bashCommand, stderr=subprocess.STDOUT, shell=True)
-            if cache != True:
-                os.remove(file)
+            if cache_keep != 'True':
+                os.remove(file_name)
             return output
     except (OSError, IOError, KeyError):
         return 'Issue Installing'
-        if cache != True:
-            os.remove(file)
-
-def fix_path(path, platform):
-    if platform == "windows":
-        path.replace("/", "\\")
-    else:
-        path.replace("\\", "/")
-    return path
+        if cache_keep != 'True':
+            os.remove(file_name)

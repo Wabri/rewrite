@@ -1,5 +1,5 @@
 try:
-    import installer
+    import modules.installer as installer
     import toga
     from toga.style.pack import *
 except ImportError:
@@ -7,7 +7,7 @@ except ImportError:
 
 def build(app):
     def installHandle(widget):
-        import installer
+        import modules.installer as installer
         resultInput.value = installer.full_install(packageInput.value)
     box = toga.Box()
     packageBox = toga.Box()
@@ -32,8 +32,9 @@ def build(app):
     return box
 
 def start():
+    try:
+        import toga
+    except ImportError:
+        pass
     return toga.App('Yet Another Package Installer',
                     'org.YAPI.rewrite', startup=build).main_loop()
-
-def main():
-    start().main_loop()
