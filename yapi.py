@@ -8,7 +8,10 @@ import modules.search as search
 import json
 import sys
 import os
-
+try:
+    os.chdir(os.path.dirname(__file__)) #Change file location if outside of YAPI
+except:
+    pass #Already in directory of YAPI.
 if len(sys.argv) != 2:
     try:
         config = json.loads(config_import.get_config())
@@ -21,7 +24,8 @@ if len(sys.argv) != 2:
         remote_branch = config['Remote.branch']
         file_extension = config['Remote.file_extension']
     except:
-        pass
+        print('Config not able to be imported. Run \"python3 yapi.py config\" to fix the error')
+
 #Main Program
 if len(sys.argv) == 1:
     result = interface.start()

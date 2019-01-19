@@ -40,18 +40,16 @@ def update_config():
 
     if platform.system() == 'Linux':
         system = 'linux-' #Include dash for distro that is appended to this string
-    elif platform.system() == 'Darwin':
-        system = 'darwin'
-    elif platform.system() == 'Windows':
-        system = 'windows'
-
-    if system == 'linux-':
         import distro
         switch = {
             'debian': 'debian',
             'ubuntu': 'debian'
         }
         system += switch.get(distro.id(), 'error')
+    elif platform.system() == 'Darwin':
+        system = 'darwin'
+    elif platform.system() == 'Windows':
+        system = 'windows'
 
     config.set('OS', 'platform', system)
     cfgfile = open("config.ini",'w')

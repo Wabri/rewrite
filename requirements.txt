@@ -1,1 +1,4 @@
 pytest-shutil
+distro
+platform
+configparser

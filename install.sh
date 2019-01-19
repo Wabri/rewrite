@@ -1,3 +1,4 @@
+#!/bin/bash
 cd ~
 git clone https://github.com/YetAnotherPackageInstaller/rewrite.git YAPI --depth 1
 git clone https://github.com/pybee/toga.git

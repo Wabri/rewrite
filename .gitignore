@@ -6,3 +6,6 @@ __pycache__/
 
 # Ignore virtualenv
 env/
+
+# Ignore search file
+search.json
