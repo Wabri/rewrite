@@ -1,53 +1,50 @@
 #YAPI Rewrite - Yet Another Package Manager
 
 #Imports
-import configparser
-import os
+import modules.config_import as config_import
+import modules.installer as installer
+import gui.interface as interface
+import modules.search as search
+import json
 import sys
-import installer
-import interface
-import configuration
-import search
-
+import os
+try:
+    os.chdir(os.path.dirname(__file__)) #Change file location if outside of YAPI
+except:
+    pass #Already in directory of YAPI.
 if len(sys.argv) != 2:
-    if (sys.argv[1] == 'config'):
-        try:
-            #Config Reading
-            config = configparser.ConfigParser()
-            config.read('config.ini')
-            platform = config['OS']['platform']
-            cache_boolean = ("True" == config['Cache']['keep_cache'])
-            cache_location = config['Cache']['cache_location']
-            remote_url = config['Remote']['location']
-            remote_branch = config['Remote']['location_branch']
-            file_extension = config['Remote']['file_extension']
-            search_local = ("True" == config['Search']['search_local'])
-            remote_search_dir = config['Search']['packages_search_remote']
-        except:
-            pass
+    try:
+        config = json.loads(config_import.get_config())
+        os_platform = config['OS.platform']
+        cache_boolean = ('True' == config['Cache.keep_cache'])
+        cache_location = config['Cache.cache_location']
+        search_local = ('True' == config['Search.search_local'])
+        search_url = config['Search.search_url']
+        remote_location = config['Remote.location']
+        remote_branch = config['Remote.branch']
+        file_extension = config['Remote.file_extension']
+    except:
+        print('Config not able to be imported. Run \"python3 yapi.py config\" to fix the error')
 
 #Main Program
 if len(sys.argv) == 1:
     result = interface.start()
-elif len(sys.argv) ==2:
+elif len(sys.argv) == 2:
     if sys.argv[1] == 'config':
-        configuration.config_update()
+        config_import.update_config()
 elif len(sys.argv) == 3:
     if sys.argv[1] == 'search':
-        print(remote_search_dir)
-        remote_url = remote_url + 'packages-' + platform + '/' + remote_branch
-        pattern = sys.argv[2]
-        matches = search.search(pattern, remote_url, file_extension,
-            search_local, cache_location)
+        matches = search.search(search_url, file_extension, search_local, cache_location, sys.argv[2])
         for match in matches:
             print(match)
     elif sys.argv[1] == 'download':
-        full_file = sys.argv[2] + file_extension
-        file_url = remote_url + 'packages-' + platform + '/' + remote_branch + '/scripts/' + full_file
-        output = installer.get_file(file_url, cache_location, full_file)
+        file_name = sys.argv[2] + file_extension
+        file_url = remote_location + os_platform + '/' + remote_branch + '/scripts/' + file_name
+        os.chdir(cache_location)
+        output = installer.get_file(file_url, file_name)
     elif sys.argv[1] == 'run':
-        full_file = sys.argv[2] + file_extension
-        output = installer.run_script(
-            cache_location, full_file, cache_boolean, platform)
+        file_name = sys.argv[2] + file_extension
+        os.chdir(cache_location)
+        output = installer.run_script(file_name, cache_boolean)
     elif sys.argv[1] == 'install':
         output = installer.full_install(sys.argv[2])
