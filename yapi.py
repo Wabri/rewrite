@@ -23,6 +23,7 @@ if len(sys.argv) != 2:
         remote_location = config['Remote.location']
         remote_branch = config['Remote.branch']
         file_extension = config['Remote.file_extension']
+        language_selected = config['Languages.selected']
     except:
         print('Config not able to be imported. Run \"python3 yapi.py config\" to fix the error')
 
