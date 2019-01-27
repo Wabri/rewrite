@@ -10,3 +10,4 @@ sudo rm requirements.txt
 sudo rm yapi.py
 git clone https://github.com/YetAnotherPackageInstaller/rewrite YAPI
 mv YAPI ..
+sudo rm -r oldYAPI
