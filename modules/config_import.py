@@ -11,7 +11,9 @@ def get_language(language, platform):
     config = ConfigParser(interpolation=ExtendedInterpolation())
     config.read(language + '_return.ini')
     if platform == 'windows': #Windows
-        conf['err_0'] = config['Return_Dos']['err_0']
+        dos_return = 'Return_Dos'
+        for key in conf.keys():
+            conf[key] = config[dos_return][key]
         conf['err_1'] = config['Return_Dos']['err_1']
         conf['err_2'] = config['Return_Dos']['err_2']
         conf['err_3'] = config['Return_Dos']['err_3']
