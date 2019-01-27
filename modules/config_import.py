@@ -28,7 +28,9 @@ def get_language(language, platform):
         conf['err_148'] = config['Return_Dos']['err_148']
         conf['err_266'] = config['Return_Dos']['err_266']
     else: #Linux or MacOS
-        conf['err_0'] = config['Return_Unix']['err_0']
+        unix_return = 'Return_Dos'
+        for key in conf.keys():
+            conf[key] = config[unix_return][key]
         conf['err_1'] = config['Return_Unix']['err_1']
         conf['err_2'] = config['Return_Unix']['err_2']
         conf['err_11'] = config['Return_Unix']['err_11']
