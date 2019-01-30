@@ -14,31 +14,10 @@ def get_language(language, platform):
         dos_return = 'Return_Dos'
         for key in conf.keys():
             conf[key] = config[dos_return][key]
-        conf['err_1'] = config['Return_Dos']['err_1']
-        conf['err_2'] = config['Return_Dos']['err_2']
-        conf['err_3'] = config['Return_Dos']['err_3']
-        conf['err_5'] = config['Return_Dos']['err_5']
-        conf['err_8'] = config['Return_Dos']['err_8']
-        conf['err_12'] = config['Return_Dos']['err_12']
-        conf['err_14'] = config['Return_Dos']['err_14']
-        conf['err_19'] = config['Return_Dos']['err_19']
-        conf['err_54'] = config['Return_Dos']['err_54']
-        conf['err_65'] = config['Return_Dos']['err_65']
-        conf['err_82'] = config['Return_Dos']['err_82']
-        conf['err_148'] = config['Return_Dos']['err_148']
-        conf['err_266'] = config['Return_Dos']['err_266']
     else: #Linux or MacOS
         unix_return = 'Return_Dos'
         for key in conf.keys():
             conf[key] = config[unix_return][key]
-        conf['err_1'] = config['Return_Unix']['err_1']
-        conf['err_2'] = config['Return_Unix']['err_2']
-        conf['err_11'] = config['Return_Unix']['err_11']
-        conf['err_13'] = config['Return_Unix']['err_13']
-        conf['err_126'] = config['Return_Unix']['err_126']
-        conf['err_127'] = config['Return_Unix']['err_127']
-        conf['err_128'] = config['Return_Unix']['err_128']
-        conf['err_130'] = config['Return_Unix']['err_130']
     os.chdir('..')
     return json.dumps(conf)
 
