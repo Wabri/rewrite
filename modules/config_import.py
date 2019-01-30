@@ -1,13 +1,37 @@
+def get_language(language, platform):
+    #Imports
+    import os
+    from configparser import ConfigParser
+    from configparser import ExtendedInterpolation
+    import json
+    print(os.getcwd())
+    #Get Config
+    conf = {}
+    os.chdir('config/languages')
+    config = ConfigParser(interpolation=ExtendedInterpolation())
+    config.read(language + '_return.ini')
+    if platform == 'windows': #Windows
+        dos_return = 'Return_Dos'
+        for key in conf.keys():
+            conf[key] = config[dos_return][key]
+    else: #Linux or MacOS
+        unix_return = 'Return_Dos'
+        for key in conf.keys():
+            conf[key] = config[unix_return][key]
+    os.chdir('..')
+    return json.dumps(conf)
+
 def get_config():
     #Imports
     import os
     from configparser import ConfigParser
     from configparser import ExtendedInterpolation
     import json
-
+    print(os.getcwd())
     #Get Config
     conf = {}
-    os.chdir('config')
+    if os.path.basename(os.getcwd()) != 'config':
+        os.chdir('config')
     config = ConfigParser(interpolation=ExtendedInterpolation())
     config.read('config.ini')
     conf['OS.platform']           = config['OS']['platform']
@@ -18,6 +42,7 @@ def get_config():
     conf['Remote.location']       = config['Remote']['location']
     conf['Remote.branch']         = config['Remote']['branch']
     conf['Remote.file_extension'] = config['Remote']['file_extension']
+    conf['Languages.selected']    = config['Languages']['selected']
     os.chdir('..')
     return json.dumps(conf)
 
