@@ -4,3 +4,8 @@ def fix_path(path, platform):
     else:
         path.replace("\\", "/")
     return path
+
+def chdir(directory, platform):
+    import os
+    if os.path.basename(os.getcwd()) != directory:
+        os.chdir(fix_path(directory, platform))

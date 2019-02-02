@@ -12,7 +12,8 @@ elif [[ "$OSTYPE" == "darwin"* ]]; then
 fi
 cd ..
 cd YAPI
-pip3 install requirements.txt
+pip3 install -r requirements.txt
 sudo rm -r .git* .travis.yml .circleci install.sh LICENSE README.md
+ln ~/YAPI/yapi.sh ~/usr/bin/yapi
 python3 yapi.py config
 cd ..

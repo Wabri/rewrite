@@ -1,24 +1,46 @@
 def get_language(language, platform):
     #Imports
-    import os
+    import modules.cross_platform as cp
     from configparser import ConfigParser
     from configparser import ExtendedInterpolation
     import json
-    print(os.getcwd())
+    import os
     #Get Config
     conf = {}
-    os.chdir('config/languages')
+    if os.path.basename(os.getcwd()) != 'languages':
+        cp.chdir('config', platform)
+        cp.chdir('languages', platform)
     config = ConfigParser(interpolation=ExtendedInterpolation())
     config.read(language + '_return.ini')
     if platform == 'windows': #Windows
         dos_return = 'Return_Dos'
-        for key in conf.keys():
-            conf[key] = config[dos_return][key]
+        conf['err_0']   = config[dos_return]['err_0']
+        conf['err_1']   = config[dos_return]['err_1']
+        conf['err_2']   = config[dos_return]['err_2']
+        conf['err_3']   = config[dos_return]['err_3']
+        conf['err_5']   = config[dos_return]['err_5']
+        conf['err_8']   = config[dos_return]['err_8']
+        conf['err_12']  = config[dos_return]['err_12']
+        conf['err_14']  = config[dos_return]['err_14']
+        conf['err_19']  = config[dos_return]['err_19']
+        conf['err_54']  = config[dos_return]['err_54']
+        conf['err_65']  = config[dos_return]['err_65']
+        conf['err_82']  = config[dos_return]['err_82']
+        conf['err_148'] = config[dos_return]['err_148']
+        conf['err_266'] = config[dos_return]['err_266']
     else: #Linux or MacOS
-        unix_return = 'Return_Dos'
-        for key in conf.keys():
-            conf[key] = config[unix_return][key]
-    os.chdir('..')
+        unix_return = 'Return_Unix'
+        conf['err_0']   = config[unix_return]['err_0']
+        conf['err_1']   = config[unix_return]['err_1']
+        conf['err_2']   = config[unix_return]['err_2']
+        conf['err_11']  = config[unix_return]['err_11']
+        conf['err_13']  = config[unix_return]['err_13']
+        conf['err_54']  = config[unix_return]['err_54']
+        conf['err_126'] = config[unix_return]['err_126']
+        conf['err_127'] = config[unix_return]['err_127']
+        conf['err_128'] = config[unix_return]['err_128']
+        conf['err_130'] = config[unix_return]['err_130']
+    cp.chdir('..', platform)
     return json.dumps(conf)
 
 def get_config():
@@ -27,7 +49,6 @@ def get_config():
     from configparser import ConfigParser
     from configparser import ExtendedInterpolation
     import json
-    print(os.getcwd())
     #Get Config
     conf = {}
     if os.path.basename(os.getcwd()) != 'config':

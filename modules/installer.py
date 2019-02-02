@@ -1,7 +1,7 @@
 def full_install(package):
-    import os
     import json
     import modules.config_import as config_import
+    import modules.cross_platform as cp
 
     config = json.loads(config_import.get_config())
     os_platform = config['OS.platform']
@@ -13,7 +13,7 @@ def full_install(package):
 
     file_name = package + file_extension
     file_url = remote_location + os_platform + '/' + remote_branch + '/scripts/' + file_name
-    os.chdir(cache_location)
+    cp.chdir(cache_location, os_platform)
     get_file(file_url, file_name)
     return run_script(file_name, cache_boolean)
 
