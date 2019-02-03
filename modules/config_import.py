@@ -1,24 +1,26 @@
 def get_language(language, platform):
     #Imports
-    import os
+    import modules.cross_platform as cp
     from configparser import ConfigParser
     from configparser import ExtendedInterpolation
     import json
-    print(os.getcwd())
+    import os
     #Get Config
     conf = {}
-    os.chdir('config/languages')
+    if os.path.basename(os.getcwd()) != 'languages':
+        cp.chdir('config', platform)
+        cp.chdir('languages', platform)
     config = ConfigParser(interpolation=ExtendedInterpolation())
     config.read(language + '_return.ini')
     if platform == 'windows': #Windows
         dos_return = 'Return_Dos'
-        for key in conf.keys():
+        for (key, val) in config.items(dos_return):
             conf[key] = config[dos_return][key]
     else: #Linux or MacOS
-        unix_return = 'Return_Dos'
-        for key in conf.keys():
+        unix_return = 'Return_Unix'
+        for (key, val) in config.items(unix_return):
             conf[key] = config[unix_return][key]
-    os.chdir('..')
+    cp.chdir('..', platform)
     return json.dumps(conf)
 
 def get_config():
@@ -27,7 +29,6 @@ def get_config():
     from configparser import ConfigParser
     from configparser import ExtendedInterpolation
     import json
-    print(os.getcwd())
     #Get Config
     conf = {}
     if os.path.basename(os.getcwd()) != 'config':
