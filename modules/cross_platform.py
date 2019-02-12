@@ -1,8 +1,8 @@
 def fix_path(path, platform):
-    if platform == "windows":
-        path.replace("/", "\\")
+    if platform == 'windows':
+        path.replace('/', '\\')
     else:
-        path.replace("\\", "/")
+        path.replace('\\', '/')
     return path
 
 def chdir(directory, platform):

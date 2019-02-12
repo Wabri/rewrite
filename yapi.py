@@ -25,7 +25,7 @@ if len(sys.argv) != 2:
         file_extension = config['Remote.file_extension']
         language_selected = config['Languages.selected']
     except:
-        print('Config not able to be imported. Run \"python3 yapi.py config\" to fix the error')
+        print('Config not able to be imported. Run \'python3 yapi.py config\' to fix the error')
 
 #Main Program
 if len(sys.argv) == 1:
@@ -38,6 +38,11 @@ elif len(sys.argv) == 3:
         matches = search.search(search_url, file_extension, search_local, cache_location, sys.argv[2])
         for match in matches:
             print(match)
+    elif sys.argv[1] == 'type':
+        print('type search start')
+        matches = search.searchType(os_platform, search_url, remote_location, remote_branch, file_extension, cache_boolean, cache_location, sys.argv[2])
+        # for match in matches:
+        #     print(match)
     elif sys.argv[1] == 'download':
         file_name = sys.argv[2] + file_extension
         file_url = remote_location + os_platform + '/' + remote_branch + '/scripts/' + file_name
