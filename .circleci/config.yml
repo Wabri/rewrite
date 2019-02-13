@@ -48,19 +48,19 @@ jobs:
     steps:
       - checkout
       - run:
-        command: |
-          sudo pip install -r requirements.txt
-          echo "Ready to test!"
+          command: |
+            sudo pip install -r requirements.txt
+            echo "Ready to test!"
       - run:
-        command: |
-          python -m venv venv || virtualenv venv
-          . venv/bin/activate
-          sudo pip install --upgrade pip
-          sudo pip install -r requirements.txt
+          command: |
+            python -m venv venv || virtualenv venv
+            . venv/bin/activate
+            sudo pip install --upgrade pip
+            sudo pip install -r requirements.txt
       - run:
-        command: |
-          . venv/bin/activate
-          python yapi.py search '[\w+]'
+          command: |
+            . venv/bin/activate
+            python yapi.py search '[\w+]'
   test-3.6-search:
     <<: *37-search
     docker:
@@ -76,19 +76,19 @@ jobs:
     steps:
       - checkout
       - run:
-        command: |
-          sudo pip install -r requirements.txt
-          echo "Ready to test!"
+          command: |
+            sudo pip install -r requirements.txt
+            echo "Ready to test!"
       - run:
-        command: |
-          python -m venv venv || virtualenv venv
-          . venv/bin/activate
-          sudo pip install --upgrade pip
-          sudo pip install -r requirements.txt
+          command: |
+            python -m venv venv || virtualenv venv
+            . venv/bin/activate
+            sudo pip install --upgrade pip
+            sudo pip install -r requirements.txt
       - run:
-        command: |
-          . venv/bin/activate
-          python yapi.py type all
+          command: |
+            . venv/bin/activate
+            python yapi.py type all
   test-3.6-search-all:
     <<: *37-search-all
     docker:
