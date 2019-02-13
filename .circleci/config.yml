@@ -6,6 +6,12 @@ workflows:
       - test-3.7
       - test-3.6
       - test-3.3
+      - test-3.7-search
+      - test-3.6-search
+      - test-3.3-search
+      - test-3.7-search-all
+      - test-3.6-search-all
+      - test-3.3-search-all
 jobs:
   test-3.7: &37-template
     docker:
@@ -38,7 +44,7 @@ jobs:
     <<: *37-template
     docker:
       - image: circleci/python:3.3-jessie
-  test-3.7-search:
+  test-3.7-search: &test-search
     <<: *37-template
     steps:
       - run:
@@ -47,22 +53,14 @@ jobs:
           . venv/bin/activate
           python yapi.py search '[\w+]'
   test-3.6-search:
-    <<: *36-template
-    steps:
-      - run:
-        name: Run search
-        command: |
-          . venv/bin/activate
-          python yapi.py search '[\w+]'
+    <<: *test-search
+    docker:
+      - image: circleci/python:3.6-jessie
   test-3.3-search:
-    <<: *33-template
-    steps:
-      - run:
-        name: Run search
-        command: |
-          . venv/bin/activate
-          python yapi.py search '[\w+]'
-  test-3.7-search-all:
+    <<: *test-search
+    docker:
+      - image: circleci/python:3.3-jessie
+  test-3.7-search-all: &search-all
     <<: *37-template
     steps:
       - run:
@@ -71,18 +69,10 @@ jobs:
           . venv/bin/activate
           python yapi.py type all
   test-3.6-search-all:
-    <<: *36-template
-    steps:
-      - run:
-        name: Run type
-        command: |
-          . venv/bin/activate
-          python yapi.py type all
+    <<: *search-all
+    docker:
+      - image: circleci/python:3.6-jessie
   test-3.3-search-all:
-    <<: *33-template
-    steps:
-      - run:
-        name: Run type
-        command: |
-          . venv/bin/activate
-          python yapi.py type all
+    <<: *search-all
+    docker:
+      - image: circleci/python:3.3-jessie
