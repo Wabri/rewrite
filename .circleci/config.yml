@@ -7,7 +7,7 @@ workflows:
       - test-3.6
       - test-3.3
 jobs:
-  test-3.7: &test-template
+  test-3.7: &37-template
     docker:
       - image: circleci/python:3.7-rc-node
     working_directory: ~/yapi
@@ -26,15 +26,63 @@ jobs:
             sudo pip install --upgrade pip
             sudo pip install -r requirements.txt
       - run:
-          name: Run tests
+          name: Run install
           command: |
             . venv/bin/activate
             python yapi.py install test
-  test-3.6:
-    <<: *test-template
+  test-3.6: &36-template
+    <<: *37-template
     docker:
       - image: circleci/python:3.6-jessie
-  test-3.3:
-    <<: *test-template
+  test-3.3: &33-template
+    <<: *37-template
     docker:
       - image: circleci/python:3.3-jessie
+  test-3.7-search:
+    <<: *37-template
+    steps:
+      - run:
+        name: Run search
+        command: |
+          . venv/bin/activate
+          python yapi.py search '[\w+]'
+  test-3.6-search:
+    <<: *36-template
+    steps:
+      - run:
+        name: Run search
+        command: |
+          . venv/bin/activate
+          python yapi.py search '[\w+]'
+  test-3.3-search:
+    <<: *33-template
+    steps:
+      - run:
+        name: Run search
+        command: |
+          . venv/bin/activate
+          python yapi.py search '[\w+]'
+  test-3.7-search-all:
+    <<: *37-template
+    steps:
+      - run:
+        name: Run type
+        command: |
+          . venv/bin/activate
+          python yapi.py type all
+  test-3.6-search-all:
+    <<: *36-template
+    steps:
+      - run:
+        name: Run type
+        command: |
+          . venv/bin/activate
+          python yapi.py type all
+  test-3.3-search-all:
+    <<: *33-template
+    steps:
+      - run:
+        name: Run type
+        command: |
+          . venv/bin/activate
+          python yapi.py type all
