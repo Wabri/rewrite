@@ -32,7 +32,7 @@ def search(api_url, file_extension, local_boolean, local_dir, search_pattern):
 
 def searchType(os_platform, api_url, base_url, branch, file_extension, local_boolean, local_dir, package_type):
     from urllib import request
-    info = []
+    name = []
     package_list = search(api_url, file_extension, local_boolean, local_dir, '[\\w+]')
     for package in package_list:
         url = base_url + os_platform + '/' + branch + '/' + local_dir + package + file_extension
@@ -41,6 +41,8 @@ def searchType(os_platform, api_url, base_url, branch, file_extension, local_boo
             unicode_content = literal_content.decode('unicode_escape')
             for line in unicode_content.splitlines():
                 if line[0] == '#':
-                    info.append(line.replace('# ', ''))
-    print(info)
-    print()
+                    line.replace('# ', '')
+                    subpart = line.split(' - ')
+                    if subpart[2] == package_type or package_type == 'all':
+                        name.append(package)
+    return name

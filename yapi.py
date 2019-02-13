@@ -1,6 +1,7 @@
 #YAPI Rewrite - Yet Another Package Manager
 
 #Imports
+import modules.cross_platform as cross_platform
 import modules.config_import as config_import
 import modules.installer as installer
 import gui.interface as interface
@@ -36,13 +37,10 @@ elif len(sys.argv) == 2:
 elif len(sys.argv) == 3:
     if sys.argv[1] == 'search':
         matches = search.search(search_url, file_extension, search_local, cache_location, sys.argv[2])
-        for match in matches:
-            print(match)
+        cross_platform.tabprint(matches)
     elif sys.argv[1] == 'type':
-        print('type search start')
         matches = search.searchType(os_platform, search_url, remote_location, remote_branch, file_extension, cache_boolean, cache_location, sys.argv[2])
-        # for match in matches:
-        #     print(match)
+        cross_platform.tabprint(matches)
     elif sys.argv[1] == 'download':
         file_name = sys.argv[2] + file_extension
         file_url = remote_location + os_platform + '/' + remote_branch + '/scripts/' + file_name
