@@ -20,19 +20,16 @@ jobs:
     steps:
       - checkout
       - run:
-          name: Install YAPI
           command: |
             sudo pip install -r requirements.txt
             echo "Ready to test!"
       - run:
-          name: Install dependencies
           command: |
             python -m venv venv || virtualenv venv
             . venv/bin/activate
             sudo pip install --upgrade pip
             sudo pip install -r requirements.txt
       - run:
-          name: Run install
           command: |
             . venv/bin/activate
             python yapi.py install test
@@ -51,19 +48,16 @@ jobs:
     steps:
       - checkout
       - run:
-        name: Install YAPI
         command: |
           sudo pip install -r requirements.txt
           echo "Ready to test!"
       - run:
-        name: Install dependencies
         command: |
           python -m venv venv || virtualenv venv
           . venv/bin/activate
           sudo pip install --upgrade pip
           sudo pip install -r requirements.txt
       - run:
-        name: Run search
         command: |
           . venv/bin/activate
           python yapi.py search '[\w+]'
@@ -82,19 +76,16 @@ jobs:
     steps:
       - checkout
       - run:
-        name: Install YAPI
         command: |
           sudo pip install -r requirements.txt
           echo "Ready to test!"
       - run:
-        name: Install dependencies
         command: |
           python -m venv venv || virtualenv venv
           . venv/bin/activate
           sudo pip install --upgrade pip
           sudo pip install -r requirements.txt
       - run:
-        name: Run search
         command: |
           . venv/bin/activate
           python yapi.py type all
