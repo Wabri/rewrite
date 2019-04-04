@@ -12,6 +12,11 @@ matrix:
     - python: 3.3
       dist: trusty
 script:
+  - python yapi.py
   - python yapi.py install test
+  - python yapi.py download test
+  - python yapi.py run test
+  - python yapi.py search [\w+]
+  - python yapi.py type all
 notifications:
     slack: yapiworkspace:4PGIakYd0aiB2LlBP78qbmCW
