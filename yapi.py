@@ -52,3 +52,16 @@ elif len(sys.argv) == 3:
         output = installer.run_script(file_name, cache_boolean)
     elif sys.argv[1] == 'install':
         output = installer.full_install(sys.argv[2])
+elif len(sys.argv) == 4:
+    if sys.argv[2] == 'search':
+        print('Search not supported for new file definition yet.')
+    elif sys.argv[2] == 'type':
+        print('Search by type not supported for new file definition yet.')
+    elif sys.argv[2] == 'download':
+        import modules.new_installer as ni
+        ni.download(sys.argv[3], config)
+        print('File download not supported for new file definition yet.')
+    elif sys.argv[2] == 'run':
+        print('File run not supported for new file definition yet.')
+    elif sys.argv[2] == 'install':
+        print('Install not supported for new file definition yet.')
