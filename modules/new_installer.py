@@ -80,3 +80,67 @@ def uninstall(package, config):
     with open(package + '.log', 'a') as package_log:
         subprocess.call(package_uninstall.split(), stdout=package_log)
     cp.chdir('..', os_platform)
+
+def search(search_string, config):
+    # Imports
+    from urllib import request
+    import json
+    import os
+    import re
+
+    # Config
+    search_local = ('True' == config['Search.search_local'])
+    search_url = config['Search.search_url']
+    file_extension = config['Remote.file_extension']
+    cache_location = config['Cache.cache_location']
+    files = []
+
+    # Search for files
+    with request.urlopen(search_url) as search_file:
+        data = json.load(search_file)
+        for file in data:
+            name = file['name']
+            if name.endswith(file_extension):
+                files.append(name.replace(file_extension, ''))
+
+    # Get local files
+    if search_local:
+        for file in os.listdir(cache_location):
+            if file.endswith(file_extension):
+                if file.replace(file_extension, '') not in files:
+                    files.append(file.replace('.sh', ''))
+
+    # Search
+    print('--> Search Packages')
+    r = re.compile(search_string)
+    result = list(filter(r.match, files))
+    return result
+
+def type(search_type, config):
+    # Imports
+    from configparser import ConfigParser
+    from configparser import ExtendedInterpolation
+    from urllib import request
+
+    # Config
+    base_url = config['Remote.location']
+    os_platform = config['OS.platform']
+    branch = config['Remote.branch']
+    file_extension = config['Remote.file_extension']
+
+    # Search
+    print('--> Search Types')
+    name = []
+    package_list = search('[\\w+]', config)
+    package_file = ConfigParser(interpolation=ExtendedInterpolation())
+    if search_type == 'all':
+        return package_list
+    else:
+        for package in package_list:
+            url = base_url + os_platform + '/' + branch + '/new-scripts/' + package + file_extension
+            with request.urlopen(url) as response:
+                package_string = response.read().decode('utf8')
+                package_file.read_string(package_string)
+                if package_file['DEFAULT']['class'] == search_type:
+                    name.append(package)
+        return name

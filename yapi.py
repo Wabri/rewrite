@@ -1,11 +1,10 @@
 #YAPI Rewrite - Yet Another Package Installer
 
 #Imports
-import modules.cross_platform as cross_platform
-import modules.config_import as config_import
-import modules.installer as installer
+import modules.cross_platform as cp
+import modules.config_import as ci
+import modules.new_installer as ni
 import gui.interface as interface
-import modules.search as search
 import json
 import sys
 import os
@@ -15,7 +14,7 @@ except:
     pass #Already in directory of YAPI.
 if len(sys.argv) != 2:
     try:
-        config = json.loads(config_import.get_config())
+        config = json.loads(ci.get_config())
         os_platform = config['OS.platform']
         cache_boolean = ('True' == config['Cache.keep_cache'])
         cache_location = config['Cache.cache_location']
@@ -34,39 +33,19 @@ if len(sys.argv) == 1:
 
 elif len(sys.argv) == 2:
     if sys.argv[1] == 'config':
-        config_import.update_config()
+        ci.update_config()
 
 elif len(sys.argv) == 3:
     if sys.argv[1] == 'search':
-        matches = search.search(search_url, file_extension, search_local, cache_location, sys.argv[2])
-        cross_platform.tabprint(matches)
+        cp.tabprint(ni.search(sys.argv[2], config))
     elif sys.argv[1] == 'type':
-        matches = search.searchType(os_platform, search_url, remote_location, remote_branch, file_extension, cache_boolean, cache_location, sys.argv[2])
-        cross_platform.tabprint(matches)
+        cp.tabprint(ni.type(sys.argv[2], config))
     elif sys.argv[1] == 'download':
-        file_name = sys.argv[2] + file_extension
-        file_url = remote_location + os_platform + '/' + remote_branch + '/scripts/' + file_name
-        os.chdir(cache_location)
-        output = installer.get_file(file_url, file_name)
+        ni.download(sys.argv[2], config)
     elif sys.argv[1] == 'run':
-        file_name = sys.argv[2] + file_extension
-        os.chdir(cache_location)
-        output = installer.run_script(file_name, cache_boolean)
+        ni.install(sys.argv[2], config)
     elif sys.argv[1] == 'install':
-        output = installer.full_install(sys.argv[2])
-
-elif len(sys.argv) == 4:
-    import modules.new_installer as ni
-    if sys.argv[2] == 'search':
-        print('Search not supported for new file definition yet.')
-    elif sys.argv[2] == 'type':
-        print('Search by type not supported for new file definition yet.')
-    elif sys.argv[2] == 'download':
-        ni.download(sys.argv[3], config)
-    elif sys.argv[2] == 'run':
-        ni.install(sys.argv[3], config)
-    elif sys.argv[2] == 'install':
-        ni.download(sys.argv[3], config)
-        ni.install(sys.argv[3], config)
-    elif sys.argv[2] == 'uninstall':
-        ni.uninstall(sys.argv[3], config)
+        ni.download(sys.argv[2], config)
+        ni.install(sys.argv[2], config)
+    elif sys.argv[1] == 'uninstall':
+        ni.uninstall(sys.argv[2], config)
