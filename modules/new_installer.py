@@ -1,65 +1,82 @@
 def download(package, config):
     # Imports
+    from configparser import ConfigParser
+    from configparser import ExtendedInterpolation
     import modules.cross_platform as cp
     from urllib import request
+    import subprocess
     import shutil
+
     # Config
     os_platform = config['OS.platform']
     remote_location = config['Remote.location']
     remote_branch = config['Remote.branch']
     file_extension = config['Remote.file_extension']
+
     # Downloading
-    print('new_installer.download Running')
-    file_url = remote_location + os_platform + '/' + remote_branch + '/new-scripts' + package + file_extension
+    print('--> Downloading Package File')
     file_name = package + file_extension
+    file_url = remote_location + os_platform + '/' + remote_branch + '/new-scripts/' + file_name
     cp.chdir('scripts/', os_platform)
     with request.urlopen(file_url) as response, open(
-        file_name, 'wb') as  out_file:
-            shutil.copyfileobj(response, out_file)
+        file_name, 'wb') as  package_file:
+            shutil.copyfileobj(response, package_file)
 
+    # Additional Resources
+    print('--> Downloading Additional Resources')
+    package_file = ConfigParser(interpolation=ExtendedInterpolation())
+    package_file.read(file_name)
+    package_download = package_file['Script']['download']
+    with open(package + '.log', 'a') as package_log:
+        subprocess.call(package_download.split(), stdout=package_log)
+    cp.chdir('..', os_platform)
 
-def get_file(file_url, file_name):
-    from urllib import request
-    import shutil
-    with request.urlopen(file_url) as response, open(
-        file_name, 'wb') as out_file:
-            shutil.copyfileobj(response, out_file)
-
-def run_script(file_name, cache_keep):
-    import subprocess
-    import os
-    try:
-        with open(file_name, 'r') as file_script:
-            bashCommand = ''
-            for line in file_script.readlines():
-                if line[0] != '#':
-                    bashCommand += line
-            bashCommand = bashCommand.replace('\n', '; ')
-            output = subprocess.call(
-                bashCommand, stderr=subprocess.STDOUT, shell=True)
-            if cache_keep != 'True':
-                os.remove(file_name)
-            return output
-    except (OSError, IOError, KeyError):
-        return 'Issue Installing'
-        if cache_keep != 'True':
-            os.remove(file_name)
-
-def full_install(package):
-    import json
-    import modules.config_import as config_import
+def install(package, config):
+    # Imports
+    from configparser import ConfigParser
+    from configparser import ExtendedInterpolation
     import modules.cross_platform as cp
+    import subprocess
 
-    config = json.loads(config_import.get_config())
+    # Config
     os_platform = config['OS.platform']
-    cache_boolean = config['Cache.keep_cache']
-    cache_location = config['Cache.cache_location']
-    remote_location = config['Remote.location']
-    remote_branch = config['Remote.branch']
-    file_extension = config['Remote.file_extension']
+    cp.chdir('scripts/', os_platform)
+    file_name = package + config['Remote.file_extension']
+    package_file = ConfigParser(interpolation=ExtendedInterpolation())
+    package_file.read(file_name)
+    package_before = package_file['Script']['before_install']
+    package_script = package_file['Script']['install']
+    package_after = package_file['Script']['after_install']
+    package_desktop = package_file['Script']['desktop_entry']
+    print('--> Before Install Script')
+    with open(package + '.log', 'a') as package_log:
+        subprocess.call(package_before.split(), stdout=package_log)
+    print('--> Install Script')
+    with open(package + '.log', 'a') as package_log:
+        subprocess.call(package_script.split(), stdout=package_log)
+    print('--> After Install Script')
+    with open(package + '.log', 'a') as package_log:
+        subprocess.call(package_after.split(), stdout=package_log)
+    print('--> Creating Desktop Entry')
+    with open(package + '.log', 'a') as package_log:
+        subprocess.call(package_desktop.split(), stdout=package_log)
+    cp.chdir('..', os_platform)
 
-    file_name = package + file_extension
-    file_url = remote_location + os_platform + '/' + remote_branch + '/scripts/' + file_name
-    cp.chdir(cache_location, os_platform)
-    get_file(file_url, file_name)
-    return run_script(file_name, cache_boolean)
+def uninstall(package, config):
+    # Imports
+    from configparser import ConfigParser
+    from configparser import ExtendedInterpolation
+    import modules.cross_platform as cp
+    import subprocess
+
+    # Config
+    os_platform = config['OS.platform']
+    cp.chdir('scripts/', os_platform)
+    file_name = package + config['Remote.file_extension']
+    package_file = ConfigParser(interpolation=ExtendedInterpolation())
+    package_file.read(file_name)
+    package_uninstall = package_file['Script']['uninstall']
+    print('--> Uninstall Script')
+    with open(package + '.log', 'a') as package_log:
+        subprocess.call(package_uninstall.split(), stdout=package_log)
+    cp.chdir('..', os_platform)

@@ -1,4 +1,4 @@
-#YAPI Rewrite - Yet Another Package Manager
+#YAPI Rewrite - Yet Another Package Installer
 
 #Imports
 import modules.cross_platform as cross_platform
@@ -31,9 +31,11 @@ if len(sys.argv) != 2:
 #Main Program
 if len(sys.argv) == 1:
     result = interface.start()
+
 elif len(sys.argv) == 2:
     if sys.argv[1] == 'config':
         config_import.update_config()
+
 elif len(sys.argv) == 3:
     if sys.argv[1] == 'search':
         matches = search.search(search_url, file_extension, search_local, cache_location, sys.argv[2])
@@ -52,16 +54,19 @@ elif len(sys.argv) == 3:
         output = installer.run_script(file_name, cache_boolean)
     elif sys.argv[1] == 'install':
         output = installer.full_install(sys.argv[2])
+
 elif len(sys.argv) == 4:
+    import modules.new_installer as ni
     if sys.argv[2] == 'search':
         print('Search not supported for new file definition yet.')
     elif sys.argv[2] == 'type':
         print('Search by type not supported for new file definition yet.')
     elif sys.argv[2] == 'download':
-        import modules.new_installer as ni
         ni.download(sys.argv[3], config)
-        print('File download not supported for new file definition yet.')
     elif sys.argv[2] == 'run':
-        print('File run not supported for new file definition yet.')
+        ni.install(sys.argv[3], config)
     elif sys.argv[2] == 'install':
-        print('Install not supported for new file definition yet.')
+        ni.download(sys.argv[3], config)
+        ni.install(sys.argv[3], config)
+    elif sys.argv[2] == 'uninstall':
+        ni.uninstall(sys.argv[3], config)
