@@ -97,7 +97,7 @@ def search(search_string, config):
 
     # Search for files
     with request.urlopen(search_url) as search_file:
-        data = json.load(search_file.decode())
+        data = json.load(search_file)
         for file in data:
             name = file['name']
             if name.endswith(file_extension):
