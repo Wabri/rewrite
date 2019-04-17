@@ -38,7 +38,7 @@ def get_config():
     conf['OS.platform']           = config['OS']['platform']
     conf['Cache.keep_cache']      = config['Cache']['keep_cache']
     conf['Cache.cache_location']  = config['Cache']['cache_location']
-    conf['Search.search_local']   = ("True" == config['Search']['search_local'])
+    conf['Search.search_local']   = ('True' == config['Search']['search_local'])
     conf['Search.search_url']     = config['Search']['search_url']
     conf['Remote.location']       = config['Remote']['location']
     conf['Remote.branch']         = config['Remote']['branch']
@@ -78,5 +78,5 @@ def update_config():
         system = 'windows'
 
     config.set('OS', 'platform', system)
-    cfgfile = open("config.ini",'w')
+    cfgfile = open('config.ini','w')
     config.write(cfgfile)

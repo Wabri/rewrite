@@ -5,36 +5,80 @@ workflows:
     jobs:
       - test-3.7
       - test-3.6
-      - test-3.3
+      - test-3.7-search
+      - test-3.6-search
+      - test-3.7-search-all
+      - test-3.6-search-all
 jobs:
-  test-3.7: &test-template
+  test-3.7: &37-template
     docker:
       - image: circleci/python:3.7-rc-node
     working_directory: ~/yapi
     steps:
       - checkout
       - run:
-          name: Install YAPI
           command: |
             sudo pip install -r requirements.txt
-            echo "Ready to  test!"
+            echo "Ready to test!"
       - run:
-          name: Install dependencies
           command: |
             python -m venv venv || virtualenv venv
             . venv/bin/activate
             sudo pip install --upgrade pip
             sudo pip install -r requirements.txt
       - run:
-          name: Run tests
           command: |
             . venv/bin/activate
             python yapi.py install test
-  test-3.6:
-    <<: *test-template
+  test-3.6: &36-template
+    <<: *37-template
     docker:
       - image: circleci/python:3.6-jessie
-  test-3.3:
-    <<: *test-template
+  test-3.7-search: &37-search
     docker:
-      - image: circleci/python:3.3-jessie
+      - image: circleci/python:3.7-rc-node
+    working_directory: ~/yapi
+    steps:
+      - checkout
+      - run:
+          command: |
+            sudo pip install -r requirements.txt
+            echo "Ready to test!"
+      - run:
+          command: |
+            python -m venv venv || virtualenv venv
+            . venv/bin/activate
+            sudo pip install --upgrade pip
+            sudo pip install -r requirements.txt
+      - run:
+          command: |
+            . venv/bin/activate
+            python yapi.py search '[\w+]'
+  test-3.6-search:
+    <<: *37-search
+    docker:
+      - image: circleci/python:3.6-jessie
+  test-3.7-search-all: &37-search-all
+    docker:
+      - image: circleci/python:3.7-rc-node
+    working_directory: ~/yapi
+    steps:
+      - checkout
+      - run:
+          command: |
+            sudo pip install -r requirements.txt
+            echo "Ready to test!"
+      - run:
+          command: |
+            python -m venv venv || virtualenv venv
+            . venv/bin/activate
+            sudo pip install --upgrade pip
+            sudo pip install -r requirements.txt
+      - run:
+          command: |
+            . venv/bin/activate
+            python yapi.py type all
+  test-3.6-search-all:
+    <<: *37-search-all
+    docker:
+      - image: circleci/python:3.6-jessie
