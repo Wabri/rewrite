@@ -5,13 +5,10 @@ workflows:
     jobs:
       - test-3.7
       - test-3.6
-      - test-3.3
       - test-3.7-search
       - test-3.6-search
-      - test-3.3-search
       - test-3.7-search-all
       - test-3.6-search-all
-      - test-3.3-search-all
 jobs:
   test-3.7: &37-template
     docker:
@@ -37,10 +34,6 @@ jobs:
     <<: *37-template
     docker:
       - image: circleci/python:3.6-jessie
-  test-3.3: &33-template
-    <<: *37-template
-    docker:
-      - image: circleci/python:3.3-jessie
   test-3.7-search: &37-search
     docker:
       - image: circleci/python:3.7-rc-node
@@ -65,10 +58,6 @@ jobs:
     <<: *37-search
     docker:
       - image: circleci/python:3.6-jessie
-  test-3.3-search:
-    <<: *37-search
-    docker:
-      - image: circleci/python:3.3-jessie
   test-3.7-search-all: &37-search-all
     docker:
       - image: circleci/python:3.7-rc-node
@@ -93,7 +82,3 @@ jobs:
     <<: *37-search-all
     docker:
       - image: circleci/python:3.6-jessie
-  test-3.3-search-all:
-    <<: *37-search-all
-    docker:
-      - image: circleci/python:3.3-jessie
